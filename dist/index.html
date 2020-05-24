@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chars</title>
+    <script type="module" src="./index.js"></script>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: 100;
+            text-align: center;
+        }
+        main {
+            max-width: 500px;
+            margin: 0 auto;
+            display: grid;
+            grid-gap: 10px;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 20px;
+        }
+        button  {
+            border: 1px solid rgb(61, 61, 61);
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Smallest Chars</h1>
+    <main>
+        <div class="buttons">
+            <button class="id_start-button">Get ID_Start</button>
+            <button class="id_continue-button">Get ID_Continue</button>
+        </div>
+        <br>
+        <textarea></textarea>
+    </main>
+</body>
+</html>
