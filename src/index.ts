@@ -1,42 +1,26 @@
-import { getWidthChecker } from './checkers/sizeChecker.js';
-import { getValidStart, getValidContinue } from './checkers/validityChecker.js';
-import getChars from './getChars.js';
-import { tick, onMouseUp } from './domHelpters'
+import { onMouseUp } from './domHelpers'
 
 const textbox = document.querySelector('textarea');
+const btns = document.querySelectorAll('button');
 
-const toggleButtons = () => {
-    document.querySelectorAll('button').forEach(btn => btn.disabled = !btn.disabled);
+const setBtns = (disabled: boolean) => {
+    for (const btn of Array.from(btns)) {
+        btn.disabled = disabled
+    }
 }
 
-onMouseUp('.id_start-button', async e => {
-    toggleButtons();
-
+const getChars = (type: string) => {
+    setBtns(true);
     textbox.value = 'Loading...';
-    await tick();
+    worker.postMessage({ type });
+}
 
-    const chars = getChars({
-        checkers: [getValidStart(), getWidthChecker(.5)],
-        range: [0, 0xFFFFF],
-    });
+const worker = new Worker('./worker.js');
 
-    textbox.value = JSON.stringify(chars);
-    
-    toggleButtons();
+worker.addEventListener('message', ({ data }) => {
+    textbox.value = data;
+    setBtns(false);
 });
 
-onMouseUp('.id_continue-button', async e => {
-    toggleButtons();
-
-    textbox.value = 'Loading...';
-    await tick();
-
-    const chars = getChars({
-        checkers: [getValidContinue(), getWidthChecker(.5)],
-        range: [0, 0xFFFFF],
-    });
-
-    textbox.value = JSON.stringify(chars);
-    
-    toggleButtons();
-})
+onMouseUp('.id_start-button', () => getChars('start'));
+onMouseUp('.id_continue-button', () => getChars('continue'));

@@ -1,6 +1,6 @@
 import { getNegative, getPositive, checkerResult } from './getState.js';
 
-const canvas = document.createElement('canvas');
+const canvas = new OffscreenCanvas(50, 50);
 const ctx = canvas.getContext("2d");
 
 const getStrSize = (str: string) => {
